@@ -42,6 +42,17 @@ class CafeQueries:
             print(f"Error getting cafe by name {cafe_name}: {e}")
 
 
+    def get_cafe_by_location(self, location):
+        try:
+            print("=================> Getting cafe by location")
+            cafes = Cafe.query.filter_by(location=location).all()
+
+            return cafes
+
+        except Exception as e:
+            print(f"Error getting cafe by location: {location}: {e}")
+
+
     def get_all_cafes(self):
         try:
             print("=================> Getting all cafes")
