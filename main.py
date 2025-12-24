@@ -1,3 +1,4 @@
+import random
 from urllib.parse import quote
 
 from flask import Flask, jsonify, render_template, request
@@ -5,6 +6,7 @@ from flask import Flask, jsonify, render_template, request
 from data.cafe_data import CafeData
 from db_queries.cafe_queries import CafeQueries
 from extensions import db
+from models import cafe
 
 from models.cafe import Cafe
 
@@ -55,7 +57,13 @@ def home():
 # HTTP GET - Read Record
 @app.route("/random")
 def get_random_cafe():
-    pass
+
+    rand_cafe = cafe_queries.get_random_cafe()
+
+    print(f"random cafe = {rand_cafe}")
+
+    return jsonify(cafes=rand_cafe.to_dict())
+
 
 # HTTP POST - Create Record
 

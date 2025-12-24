@@ -1,3 +1,5 @@
+import random
+
 from extensions import db
 from models.cafe import Cafe
 
@@ -38,4 +40,27 @@ class CafeQueries:
                 return cafe[0]
         except Exception as e:
             print(f"Error getting cafe by name {cafe_name}: {e}")
+
+
+    def get_all_cafes(self):
+        try:
+            print("=================> Getting all cafes")
+
+            cafes = Cafe.query.order_by(Cafe.id).all()
+            return cafes
+
+        except Exception as e:
+            print(f"Error getting all cafes: {e}")
+
+
+    def get_random_cafe(self):
+        try:
+            print("=================> Getting random cafe")
+
+            cafes = self.get_all_cafes()
+
+            return random.choice(cafes)
+
+        except Exception as e:
+            print(f"Error getting random cafe: {e}")
 
