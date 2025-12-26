@@ -1,3 +1,4 @@
+import code
 import random
 
 from extensions import db
@@ -114,5 +115,29 @@ class CafeQueries:
             error_message = f"Error updating price: {e}"
             print(f"Error updating price: {e}")
             return {"message": {"error": error_message}, "code": 500}
+
+    def delete_cafe(self, cafe_id):
+        try:
+            print("================> Deleting cafe")
+
+            cafe = self.get_cafe_by_id(cafe_id)
+
+            if cafe is None:
+                message = {"message": {"error": {"Not found": "Sorry a cafe with that id was not found in the database"}}, "code": 404}
+
+                return message
+            else:
+                print("cafe is not none")
+                db.session.delete(cafe)
+                db.session.commit()
+
+                message = {"message": {"success": "Cafe has been deleted"}, "code": 200}
+                print(f"message: {message}")
+                return message
+
+        except Exception as e:
+            message = {"message": {"error": f"{e}"}, code: 500}
+            print(f"Error deleting cafe: {e}")
+            return message
 
 

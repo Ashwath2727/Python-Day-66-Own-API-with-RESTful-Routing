@@ -42,6 +42,8 @@ cafes = Cafe()
 cafe_data = CafeData()
 cafe_queries = CafeQueries()
 
+api_key = "ashwath34MVN4312"
+
 
 @app.route("/")
 def home():
@@ -119,6 +121,20 @@ def update_price(cafe_id):
     return jsonify(message), code
 
 # HTTP DELETE - Delete Record
+@app.route("/report-closed/<cafe_id>", methods=["DELETE"])
+def delete_cafe(cafe_id):
+
+    input_key = request.args.get("api-key")
+    print(f"input key = {input_key}")
+
+    if input_key == api_key:
+        result = cafe_queries.delete_cafe(cafe_id)
+
+        return jsonify(result.get("message")), result.get("code")
+
+    else:
+        message = {"error": "Sorry, that's not allowed. Make sure you have the correct API key"}
+        return jsonify(message=message), 403
 
 
 if __name__ == '__main__':
